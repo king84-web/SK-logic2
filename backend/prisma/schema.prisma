@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ServiceBooking {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  service   String
+  message   String?
+  date      DateTime?
+  status    String   @default("pending") // pending, confirmed, completed, cancelled
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([service])
+  @@index([status])
+}
+
+model AcademyEnrollment {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  course    String   // Mobile Decoding, Wi-Fi Management, Social Media Growth, Full-Stack Dev
+  status    String   @default("enrolled") // enrolled, completed, cancelled
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([course])
+  @@index([status])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  status    String   @default("new") // new, read, responded
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+}

@@ -1,0 +1,9 @@
+{
+  "name": "sk-logic-vercel",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "nodejs_version": "18"
+}

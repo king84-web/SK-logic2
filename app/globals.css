@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    @apply font-['Inter'] text-slate-300 antialiased;
+    background-color: #0f172a;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-['Plus_Jakarta_Sans'] tracking-tight;
+  }
+}
+
+/* Modern Gradient Text Effect */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-cyan-400 font-extrabold;
+}
+
+/* Light Green Brand Text */
+.brand-text {
+  @apply text-emerald-400 font-bold;
+}
+
+.brand-text-animated {
+  @apply text-emerald-400 font-bold animate-glow;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Advanced SK Logic Brand Animations */
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(34, 197, 94, 0.5), 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(34, 197, 94, 0.8), 0 0 40px rgba(34, 197, 94, 0.5);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes bounce-smooth {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes color-cycle {
+  0% {
+    color: #ff0000;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
+  }
+  33% {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+  66% {
+    color: #0000ff;
+    text-shadow: 0 0 10px rgba(0, 0, 255, 0.8), 0 0 20px rgba(0, 0, 255, 0.5);
+  }
+  100% {
+    color: #ff0000;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease-in-out;
+}
+
+/* SK Logic Brand Animations */
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.3), transparent);
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+.animate-bounce-smooth {
+  animation: bounce-smooth 2s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-color-cycle {
+  animation: color-cycle 10s linear infinite;
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-300;
+}
+
+.btn-secondary {
+  @apply bg-slate-700 hover:bg-slate-800 text-white px-6 py-3 rounded-lg font-semibold transition duration-300;
+}
+
+.btn-outline {
+  @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 py-3 rounded-lg font-semibold transition duration-300;
+}
+
+/* Card styles */
+.card {
+  @apply bg-slate-800 rounded-lg p-6 border border-slate-700 hover:border-blue-600 transition duration-300;
+}
+
+.card-hover {
+  @apply card hover:shadow-xl hover:shadow-blue-500/20 transform hover:scale-105;
+}
+
+/* Section styles */
+.section {
+  @apply py-12 md:py-16 lg:py-20;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl font-bold mb-4 text-center;
+}
+
+.section-subtitle {
+  @apply text-gray-400 text-center mb-12 max-w-2xl mx-auto;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1e40af;
+}
