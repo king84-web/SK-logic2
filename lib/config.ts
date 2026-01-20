@@ -57,6 +57,8 @@ export const SITE_CONFIG = {
 
   // Academy Courses
   academy: {
+    name: "SK Logic Academy",
+    description: "Professional courses in web development, mobile technology, and digital services.",
     courses: [
       {
         id: 'mobile-decoding',
