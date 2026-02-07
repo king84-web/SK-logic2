@@ -19,7 +19,7 @@ export function generateToken(): string {
   return Math.random().toString(36).substring(2, 15)
 }
 
-export async function validateAdminCredentials(email: string, password: string) {
+export function validateAdminCredentials(email: string, password: string) {
   return isValidAdminEmail(email) && validatePassword(password)
 }
 
