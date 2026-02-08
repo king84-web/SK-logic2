@@ -1,0 +1,23 @@
+
+> sk-logic-official-website@1.0.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+Failed to compile.
+
+./app/booking/page.tsx:4:1
+Type error: 'Image' is declared but its value is never read.
+
+  2 |
+  3 | import { useState } from 'react'
+> 4 | import Image from 'next/image'
+    | ^
+  5 | import BookingForm from '@/frontend/components/BookingForm'
+  6 | import ServiceGrid from '@/frontend/components/ServiceGrid'
+  7 | import { SITE_CONFIG } from '@/lib/config'
+Next.js build worker exited with code: 1 and signal: null

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useContent } from '@/lib/content-context'
 
 interface Service {
   icon: string
@@ -31,21 +32,50 @@ const serviceCategories: Service[] = [
 ]
 
 export default function ServiceCategories() {
-  return (
-    <section className="section bg-dark">
-      <div className="container mx-auto px-4">
-        <h2 className="section-title">Our Services</h2>
-        <p className="section-subtitle">Comprehensive solutions for your digital needs</p>
+  const { settings } = useContent()
 
-        <div className="grid md:grid-cols-3 gap-8">
+  // If the admin provided a gradient, use it; otherwise use the service image if available
+  const useGradient = Boolean(settings && settings.pageBackgroundGradient)
+  // Use a dedicated services background image when admin hasn't set a gradient
+  const bgImage = '/images/services-feature.avif'
+
+  const sectionStyle: React.CSSProperties = useGradient
+    ? {}
+    : {
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center right',
+      }
+
+  const sectionClass = useGradient
+    ? `relative pb-12 bg-gradient-to-br ${settings!.pageBackgroundGradient}`
+    : 'relative pb-12'
+
+  const fontStyle: React.CSSProperties = {
+    fontFamily: settings?.fontFamily || undefined,
+  }
+
+  return (
+    <section className={sectionClass} style={sectionStyle}>
+      <div className="container mx-auto px-4 py-12" style={fontStyle}>
+        <div className="flex flex-col md:flex-row items-center gap-8 mb-6">
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="section-title text-white">Our Services</h2>
+            <p className="section-subtitle text-slate-200">Comprehensive solutions for your digital needs</p>
+          </div>
+          <div className="flex-1 flex justify-center md:justify-end" />
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 mt-8">
           {serviceCategories.map((category, index) => (
-            <div key={index} className="card-hover group">
+            <div key={index} className="card-hover group bg-white/5 p-6 rounded-xl">
               <div className="text-5xl mb-4">{category.icon}</div>
-              <h3 className="text-2xl font-bold mb-3">{category.title}</h3>
-              <p className="text-gray-400 mb-6">{category.description}</p>
+              <h3 className="text-2xl font-bold mb-3 text-white">{category.title}</h3>
+              <p className="text-slate-300 mb-6">{category.description}</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-blue-400">{category.count} Services</span>
-                <Link href="/booking" className="text-blue-600 group-hover:text-blue-400 transition font-bold">
+                <Link href="/booking" className="text-blue-300 group-hover:text-blue-100 transition font-bold">
                   →
                 </Link>
               </div>

@@ -37,7 +37,7 @@ export async function sendBookingConfirmationEmail({
 }: BookingEmailProps) {
   try {
     const adminResponse = await resend.emails.send({
-      from: 'SK Logic <noreply@sk-logic.com>',
+      from: 'SK Logic <onboarding@resend.dev>',
       to: adminEmail,
       subject: `New Service Booking: ${service}`,
       html: `
@@ -52,7 +52,7 @@ export async function sendBookingConfirmationEmail({
     })
 
     const customerResponse = await resend.emails.send({
-      from: 'SK Logic <noreply@sk-logic.com>',
+      from: 'SK Logic <onboarding@resend.dev>',
       to: customerEmail,
       subject: 'Booking Confirmation - SK Logic',
       html: `
@@ -81,7 +81,7 @@ export async function sendContactReplyEmail({
 }: ContactEmailProps) {
   try {
     const adminResponse = await resend.emails.send({
-      from: 'SK Logic <noreply@sk-logic.com>',
+      from: 'SK Logic <onboarding@resend.dev>',
       to: adminEmail,
       subject: `New Contact Message: ${subject}`,
       html: `
@@ -95,7 +95,7 @@ export async function sendContactReplyEmail({
     })
 
     const customerResponse = await resend.emails.send({
-      from: 'SK Logic <noreply@sk-logic.com>',
+      from: 'SK Logic <onboarding@resend.dev>',
       to: customerEmail,
       subject: `We received your message - ${subject}`,
       html: `
@@ -123,7 +123,7 @@ export async function sendEnrollmentConfirmationEmail({
 }: EnrollmentEmailProps) {
   try {
     const adminResponse = await resend.emails.send({
-      from: 'SK Logic <noreply@sk-logic.com>',
+      from: 'SK Logic <onboarding@resend.dev>',
       to: adminEmail,
       subject: `New Academy Enrollment: ${course}`,
       html: `
@@ -137,7 +137,7 @@ export async function sendEnrollmentConfirmationEmail({
     })
 
     const studentResponse = await resend.emails.send({
-      from: 'SK Logic <noreply@sk-logic.com>',
+      from: 'SK Logic <onboarding@resend.dev>',
       to: studentEmail,
       subject: `Welcome to SK Logic Academy - ${course}`,
       html: `

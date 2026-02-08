@@ -1,17 +1,36 @@
 import { PrismaClient } from '@prisma/client'
 
-const globalForPrisma = global as unknown as { prisma?: PrismaClient }
+const globalForPrisma = global as unknown as { prisma?: any }
 
-let prismaInstance: PrismaClient | undefined
+let prisma: any
 
-if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('file:')) {
-  prismaInstance = globalForPrisma.prisma || new PrismaClient({
-    log: ['error'],
+try {
+  if (globalForPrisma.prisma) {
+    prisma = globalForPrisma.prisma
+  } else {
+    prisma = new PrismaClient({ log: ['error'] })
+    if (process.env.NODE_ENV !== 'production') {
+      globalForPrisma.prisma = prisma
+    }
+  }
+} catch (e) {
+  // Prisma failed to initialize (likely invalid/missing DATABASE_URL).
+  // Export a proxy that rejects on any model access so imports don't crash the app.
+  console.error('Prisma Client initialization failed:', e)
+  const err = new Error(String((e as any)?.message || e))
+  err.name = 'PrismaClientInitializationError'
+
+  const createRejecting = () => {
+    const fn = (..._args: any[]) => Promise.reject(err)
+    return new Proxy(fn, {
+      get: () => createRejecting(),
+      apply: () => Promise.reject(err),
+    })
+  }
+
+  prisma = new Proxy({}, {
+    get: () => createRejecting(),
   })
-  if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prismaInstance
-} else {
-  // Fallback during builds when DATABASE_URL doesn't point to a sqlite file.
-  prismaInstance = {} as unknown as PrismaClient
 }
 
-export const prisma = prismaInstance
+export { prisma }

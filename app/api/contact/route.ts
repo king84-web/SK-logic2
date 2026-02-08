@@ -4,14 +4,15 @@ import { sendContactReplyEmail } from '@/backend/lib/email'
 
 // CORS middleware
 export async function OPTIONS(request: NextRequest) {
-  const origin = request.headers.get('origin') || ''
-  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000']
+  const origin = request.headers.get('origin')
+  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',')
+  const isAllowed = origin && allowedOrigins.some(o => o.trim() === origin)
 
-  if (allowedOrigins.includes(origin) || origin === '') {
+  if (isAllowed) {
     return new NextResponse(null, {
       status: 200,
       headers: {
-        'Access-Control-Allow-Origin': origin || '*',
+        'Access-Control-Allow-Origin': origin,
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },

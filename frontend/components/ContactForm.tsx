@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import axios from 'axios'
-import { SITE_CONFIG } from '@/backend/lib/config'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -26,8 +25,7 @@ export default function ContactForm() {
     setStatus('idle')
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
-      await axios.post(`${apiUrl}/api/contact`, formData)
+      await axios.post('/api/contact', formData)
       setStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
       setTimeout(() => setStatus('idle'), 3000)

@@ -1,3 +1,5 @@
+'use client'
+
 import Hero from '@/frontend/components/Hero'
 import ServiceCategories from '@/frontend/components/ServiceCategories'
 import AcademySection from '@/frontend/components/AcademySection'

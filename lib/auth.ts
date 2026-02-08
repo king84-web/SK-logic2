@@ -1,14 +1,19 @@
 // Authentication utilities (client-safe functions)
 
 export function isValidAdminEmail(email: string): boolean {
-  const adminEmails = ['admin@sklogic.com', 'admin@localhost', 'kamarasolomon164@gmail.com']
+  const adminEmails = ['admin@sklogic.com']
   return adminEmails.includes(email.toLowerCase())
 }
 
 export function validatePassword(password: string): boolean {
-  // For now, use simple password validation
-  // In production, use bcrypt or similar
-  return password === 'admin123' // Change to secure password in production
+  // Use environment variable for admin password
+  // Store ADMIN_PASSWORD in environment variables
+  const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD
+  if (!adminPassword) {
+    console.warn('ADMIN_PASSWORD environment variable not set')
+    return false
+  }
+  return password === adminPassword
 }
 
 export function generateToken(): string {

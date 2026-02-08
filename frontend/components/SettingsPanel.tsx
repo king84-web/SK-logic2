@@ -10,6 +10,8 @@ export default function SettingsPanel() {
   const [pageBackgroundGradient, setPageBackgroundGradient] = useState('')
   const [accentColor, setAccentColor] = useState('')
   const [textColor, setTextColor] = useState('')
+  const [fontFamily, setFontFamily] = useState('')
+  const [baseFontSize, setBaseFontSize] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -19,6 +21,8 @@ export default function SettingsPanel() {
       setPageBackgroundGradient(settings.pageBackgroundGradient || '')
       setAccentColor(settings.accentColor || '')
       setTextColor(settings.textColor || '')
+      setFontFamily(settings.fontFamily || '')
+      setBaseFontSize(settings.baseFontSize || '')
     }
   }, [settings])
 
@@ -33,6 +37,8 @@ export default function SettingsPanel() {
         pageBackgroundGradient,
         accentColor,
         textColor,
+        fontFamily,
+        baseFontSize,
       })
       setMessage('Settings updated successfully! Changes will appear across all pages.')
       setTimeout(() => setMessage(''), 4000)
@@ -123,6 +129,32 @@ export default function SettingsPanel() {
               placeholder="white"
             />
             <p className="text-xs text-slate-400 mt-2">Example: white, slate-100, gray-200</p>
+          </div>
+
+          {/* Font Family */}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Base Font Family</label>
+            <input
+              type="text"
+              value={fontFamily}
+              onChange={(e) => setFontFamily(e.target.value)}
+              className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50"
+              placeholder="system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial"
+            />
+            <p className="text-xs text-slate-400 mt-2">Example: Inter, 'Helvetica Neue', Arial</p>
+          </div>
+
+          {/* Base Font Size */}
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Base Font Size (px)</label>
+            <input
+              type="text"
+              value={baseFontSize}
+              onChange={(e) => setBaseFontSize(e.target.value)}
+              className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50"
+              placeholder="16px"
+            />
+            <p className="text-xs text-slate-400 mt-2">Set base font-size to apply across pages</p>
           </div>
 
           {message && (

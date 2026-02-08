@@ -114,17 +114,13 @@ html {
     color: #ff0000;
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
   }
-  33% {
+  50% {
     color: #ffffff;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
   }
-  66% {
+  100% {
     color: #0000ff;
     text-shadow: 0 0 10px rgba(0, 0, 255, 0.8), 0 0 20px rgba(0, 0, 255, 0.5);
-  }
-  100% {
-    color: #ff0000;
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
   }
 }
 
@@ -161,6 +157,97 @@ html {
 
 .animate-color-cycle {
   animation: color-cycle 10s linear infinite;
+}
+
+/* Drop animations for hero images */
+@keyframes dropDown1 {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dropDown2 {
+  from {
+    opacity: 0;
+    transform: translateY(-120px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dropDown3 {
+  from {
+    opacity: 0;
+    transform: translateY(-110px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dropDown4 {
+  from {
+    opacity: 0;
+    transform: translateY(-130px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dropDown5 {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dropDown6 {
+  from {
+    opacity: 0;
+    transform: translateY(-125px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.drop-1 {
+  animation: dropDown1 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0s forwards;
+}
+
+.drop-2 {
+  animation: dropDown2 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
+}
+
+.drop-3 {
+  animation: dropDown3 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+}
+
+.drop-4 {
+  animation: dropDown4 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s forwards;
+}
+
+.drop-5 {
+  animation: dropDown5 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s forwards;
+}
+
+.drop-6 {
+  animation: dropDown6 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.75s forwards;
 }
 
 /* Custom button styles */

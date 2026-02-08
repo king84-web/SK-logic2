@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -19,12 +19,19 @@ model ServiceBooking {
   message   String?
   date      DateTime?
   status    String   @default("pending") // pending, confirmed, completed, cancelled
+  amount    Float?   // Payment amount
+  currency  String   @default("RWF") // Currency
+  paymentId String?  // Flutterwave transaction ID
+  paymentStatus String @default("unpaid") // unpaid, paid, failed
+  paymentMethod String? // flutterwave, manual, whatsapp
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([email])
   @@index([service])
   @@index([status])
+  @@index([paymentStatus])
+  @@index([paymentId])
 }
 
 model AcademyEnrollment {
@@ -34,12 +41,18 @@ model AcademyEnrollment {
   phone     String
   course    String   // Mobile Decoding, Wi-Fi Management, Social Media Growth, Full-Stack Dev
   status    String   @default("enrolled") // enrolled, completed, cancelled
+  amount    Float?   // Course fee
+  currency  String   @default("RWF")
+  paymentId String?  // Flutterwave transaction ID
+  paymentStatus String @default("unpaid") // unpaid, paid, failed
+  paymentMethod String? // flutterwave, manual, whatsapp
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([email])
   @@index([course])
   @@index([status])
+  @@index([paymentStatus])
 }
 
 model ContactMessage {
@@ -54,4 +67,97 @@ model ContactMessage {
 
   @@index([email])
   @@index([status])
+}
+
+model HeroContent {
+  id        String   @id @default(cuid())
+  title     String
+  subtitle  String
+  mainImage String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AcademyContent {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   // JSON stringified courses data
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminSettings {
+  id                String   @id @default(cuid())
+  siteName          String   @default("SK Logic")
+  siteEmail         String   @default("info@sklogic.com")
+  maintenanceMode   Boolean  @default(false)
+  analyticsEnabled  Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String?
+  message   String
+  avatar    String?
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model News {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  excerpt   String?
+  content   String
+  image     String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Promo {
+  id        String   @id @default(cuid())
+  title     String
+  code      String   @unique
+  details   String?
+  active    Boolean  @default(true)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model GalleryImage {
+  id        String   @id @default(cuid())
+  src       String
+  alt       String
+  title     String
+  category  String?
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PageSettings {
+  id                    String   @id @default(cuid())
+  pageBackgroundColor   String   @default("from-slate-950 to-slate-900")
+  pageBackgroundGradient String  @default("from-slate-950 via-slate-900 to-slate-900")
+  accentColor           String   @default("blue-600")
+  textColor             String   @default("white")
+  fontFamily            String?  @default("system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial")
+  baseFontSize          String?  @default("16px")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }

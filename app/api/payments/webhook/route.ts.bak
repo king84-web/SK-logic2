@@ -1,0 +1,102 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/backend/lib/db/prisma'
+import { getFlutterWaveTransactionByRef } from '@/lib/flutterwave'
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+
+    // Flutterwave webhook payload
+    const { data, event } = body
+
+    if (event === 'charge.completed') {
+      const { tx_ref } = data
+
+      // Verify payment with Flutterwave
+      const verification = await getFlutterWaveTransactionByRef(tx_ref)
+
+      if (verification.status === 'success' && verification.data[0].status === 'successful') {
+        // Update booking or enrollment
+        const booking = await prisma.serviceBooking.findFirst({
+          where: { paymentId: tx_ref },
+        })
+
+        if (booking) {
+          await prisma.serviceBooking.update({
+            where: { id: booking.id },
+            data: {
+              paymentStatus: 'paid',
+              status: 'confirmed',
+            },
+          })
+
+          // Send confirmation email
+          // TODO: Implement email notification
+        }
+
+        const enrollment = await prisma.academyEnrollment.findFirst({
+          where: { paymentId: tx_ref },
+        })
+
+        if (enrollment) {
+          await prisma.academyEnrollment.update({
+            where: { id: enrollment.id },
+            data: {
+              paymentStatus: 'paid',
+              status: 'enrolled',
+            },
+          })
+
+          // Send confirmation email
+          // TODO: Implement email notification
+        }
+
+        return NextResponse.json({ status: 'success', message: 'Payment verified' })
+      } else {
+        // Payment failed
+        const booking = await prisma.serviceBooking.findFirst({
+          where: { paymentId: tx_ref },
+        })
+
+        if (booking) {
+          await prisma.serviceBooking.update({
+            where: { id: booking.id },
+            data: { paymentStatus: 'failed' },
+          })
+        }
+
+        const enrollment = await prisma.academyEnrollment.findFirst({
+          where: { paymentId: tx_ref },
+        })
+
+        if (enrollment) {
+          await prisma.academyEnrollment.update({
+            where: { id: enrollment.id },
+            data: { paymentStatus: 'failed' },
+          })
+        }
+
+        return NextResponse.json({ status: 'error', message: 'Payment verification failed' })
+      }
+    }
+
+    return NextResponse.json({ status: 'success' })
+  } catch (error: any) {
+    console.error('Webhook error:', error)
+    return NextResponse.json(
+      { error: 'Webhook processing failed' },
+      { status: 500 }
+    )
+  }
+}
+
+// Verify webhook signature (optional but recommended)
+// async function verifyWebhookSignature(request: NextRequest): Promise<boolean> {
+  const signature = request.headers.get('veriff-signature')
+  const body = await request.text()
+
+  // Implement signature verification with your Flutterwave secret key
+  // This is optional but recommended for security
+  return true
+}
+
