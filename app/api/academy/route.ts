@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/backend/lib/db/prisma'
 import { sendEnrollmentConfirmationEmail } from '@/backend/lib/email'
