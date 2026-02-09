@@ -45,7 +45,7 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined)
 const defaultHero: HeroSettings = {
   title: 'SK Logic',
   subtitle: 'Think Logically, Build Digital.',
-  mainImage: '/images/hero-main.png',
+  mainImage: '/images/home-hero-image.jpg',
 }
 
 const defaultSettings: PageSettings = {

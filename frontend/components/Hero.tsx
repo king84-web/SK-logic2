@@ -21,24 +21,24 @@ export default function Hero() {
     <section 
       className="relative text-white py-20 bg-cover bg-center"
       style={{
-        backgroundImage: `url(/images/hero-feature.png)`,
+        backgroundImage: `url(/images/home-hero-image.jpg)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
       <div className="absolute inset-0 bg-black/50"></div>
       <div className="container relative mx-auto px-4">
-        <h1 className="text-5xl font-bold">Think Logically, Build Digital.</h1>
-        <p className="mt-4 text-xl text-slate-400">Transform your digital presence.</p>
-        <div className="flex gap-4 mt-8">
-          <button className="bg-blue-600 px-6 py-3 rounded-lg">Book a Service</button>
-          <button className="border border-slate-700 px-6 py-3 rounded-lg">Learn with Us</button>
-          {showAdmin && (
-            <Link href="/admin/login" className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors">
-              <Lock size={16} /> Admin Login
-            </Link>
-          )}
-        </div>
+      <h1 className="text-5xl font-bold">Think Logically, Build Digital.</h1>
+      <p className="mt-4 text-xl text-slate-400">Transform your digital presence.</p>
+      <div className="flex gap-4 mt-8">
+      <button className="bg-blue-600 px-6 py-3 rounded-lg">Book a Service</button>
+      <button className="border border-slate-700 px-6 py-3 rounded-lg">Learn with Us</button>
+      {showAdmin && (
+      <Link href="/admin/login" className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors">
+        <Lock size={16} /> Admin Login
+      </Link>
+      )}
+      </div>
       </div>
     </section>
   )

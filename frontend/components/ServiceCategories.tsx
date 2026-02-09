@@ -35,22 +35,17 @@ export default function ServiceCategories() {
   const { settings } = useContent()
 
   // If the admin provided a gradient, use it; otherwise use the service image if available
-  const useGradient = Boolean(settings && settings.pageBackgroundGradient)
-  // Use a dedicated services background image when admin hasn't set a gradient
+  // Always use the services feature image for the services section background
   const bgImage = '/images/services-feature.avif'
 
-  const sectionStyle: React.CSSProperties = useGradient
-    ? {}
-    : {
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${bgImage})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center right',
-      }
+  const sectionStyle: React.CSSProperties = {
+    backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url(${bgImage})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+  }
 
-  const sectionClass = useGradient
-    ? `relative pb-12 bg-gradient-to-br ${settings!.pageBackgroundGradient}`
-    : 'relative pb-12'
+  const sectionClass = 'relative pb-12'
 
   const fontStyle: React.CSSProperties = {
     fontFamily: settings?.fontFamily || undefined,

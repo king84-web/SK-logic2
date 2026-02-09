@@ -9,7 +9,7 @@ export async function GET(_request: NextRequest) {
         id: 'default',
         title: 'SK Logic',
         subtitle: 'Think Logically, Build Digital.',
-        mainImage: '/images/hero-main.png',
+        mainImage: '/images/home-hero-image.jpg',
       })
     }
     return NextResponse.json(hero)
@@ -21,7 +21,7 @@ export async function GET(_request: NextRequest) {
         id: 'default',
         title: 'SK Logic',
         subtitle: 'Think Logically, Build Digital.',
-        mainImage: '/images/hero-main.png',
+        mainImage: '/images/home-hero-image.jpg',
       })
     }
       console.error('Hero GET error:', error)
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
         data: {
           title: body.title || 'SK Logic',
           subtitle: body.subtitle || 'Think Logically, Build Digital.',
-          mainImage: body.mainImage || '/images/hero-main.png',
+          mainImage: body.mainImage || '/images/home-hero-image.jpg',
         },
       })
     }
