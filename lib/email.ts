@@ -1,6 +1,12 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    throw new Error('Missing RESEND_API_KEY environment variable')
+  }
+  return new Resend(apiKey)
+}
 
 interface BookingEmailProps {
   adminEmail: string
@@ -36,6 +42,7 @@ export async function sendBookingConfirmationEmail({
   phone,
 }: BookingEmailProps) {
   try {
+    const resend = getResendClient()
     const adminResponse = await resend.emails.send({
       from: 'SK Logic <onboarding@resend.dev>',
       to: adminEmail,
@@ -80,6 +87,7 @@ export async function sendContactReplyEmail({
   message,
 }: ContactEmailProps) {
   try {
+    const resend = getResendClient()
     const adminResponse = await resend.emails.send({
       from: 'SK Logic <onboarding@resend.dev>',
       to: adminEmail,
@@ -122,6 +130,7 @@ export async function sendEnrollmentConfirmationEmail({
   phone,
 }: EnrollmentEmailProps) {
   try {
+    const resend = getResendClient()
     const adminResponse = await resend.emails.send({
       from: 'SK Logic <onboarding@resend.dev>',
       to: adminEmail,

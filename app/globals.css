@@ -287,7 +287,7 @@ html {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  background: linear-gradient(135deg, #abb2be 0%, #60a5fa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -299,14 +299,14 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #8a045d;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3b82f6;
+  background: #1290c2;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1e40af;
+  background: #e0e4f0;
 }
