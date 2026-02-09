@@ -21,9 +21,9 @@ export default function Hero() {
     <section 
       className="relative text-white py-20 bg-cover bg-center"
       style={{
-        backgroundImage: `url(/images/home-hero-image.jpg)`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+      backgroundColor: `silver`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
       }}
     >
       <div className="absolute inset-0 bg-black/50"></div>
