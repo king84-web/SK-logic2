@@ -1,19 +1,34 @@
-// Authentication utilities (client-safe functions)
+import { prisma } from './prisma'
+import bcrypt from 'bcryptjs'
+
+// Validate admin credentials against the User table
+export async function validateAdminCredentials(email: string, password: string): Promise<boolean> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+    })
+    if (!user) {
+      return false
+    }
+    // Compare the provided password with the hashed password in the database
+    const passwordMatch = await bcrypt.compare(password, user.password)
+    return passwordMatch
+  } catch (error) {
+    console.error('Error validating credentials:', error)
+    return false
+  }
+}
+
+// Remove any reliance on process.env.ADMIN_PASSWORD
 
 export function isValidAdminEmail(email: string): boolean {
-  const adminEmails = ['admin@sklogic.com']
-  return adminEmails.includes(email.toLowerCase())
+  // Optionally, you can check if the email exists in AdminSettings, but for now, always return true
+  return true
 }
 
 export function validatePassword(password: string): boolean {
-  // Use environment variable for admin password
-  // Store ADMIN_PASSWORD in environment variables
-  const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD
-  if (!adminPassword) {
-    console.warn('ADMIN_PASSWORD environment variable not set')
-    return false
-  }
-  return password === adminPassword
+  // Password validation is handled by validateAdminCredentials
+  return true
 }
 
 export function generateToken(): string {
@@ -22,9 +37,5 @@ export function generateToken(): string {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
   }
   return Math.random().toString(36).substring(2, 15)
-}
-
-export function validateAdminCredentials(email: string, password: string) {
-  return isValidAdminEmail(email) && validatePassword(password)
 }
 

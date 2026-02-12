@@ -13,7 +13,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (validateAdminCredentials(email, password)) {
+    // Now validateAdminCredentials is async
+    const isValid = await validateAdminCredentials(email, password)
+    
+    if (isValid) {
       const token = Buffer.from(`${email}:${Date.now()}`).toString('base64')
       return NextResponse.json(
         { success: true, message: 'Login successful', token },

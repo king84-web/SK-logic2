@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,22 +7,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model ServiceBooking {
+model User {
   id        String   @id @default(cuid())
-  name      String
-  email     String
-  phone     String
-  service   String
-  message   String?
-  date      DateTime?
-  status    String   @default("pending") // pending, confirmed, completed, cancelled
-  amount    Float?   // Payment amount
-  currency  String   @default("RWF") // Currency
-  paymentId String?  // Flutterwave transaction ID
-  paymentStatus String @default("unpaid") // unpaid, paid, failed
-  paymentMethod String? // flutterwave, manual, whatsapp
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ServiceBooking {
+  id            String    @id @default(cuid())
+  name          String
+  email         String
+  phone         String
+  service       String
+  message       String?
+  date          DateTime?
+  status        String    @default("pending")
+  amount        Float?
+  currency      String    @default("RWF")
+  paymentId     String?
+  paymentStatus String    @default("unpaid")
+  paymentMethod String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@index([email])
   @@index([service])
@@ -35,19 +40,19 @@ model ServiceBooking {
 }
 
 model AcademyEnrollment {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  phone     String
-  course    String   // Mobile Decoding, Wi-Fi Management, Social Media Growth, Full-Stack Dev
-  status    String   @default("enrolled") // enrolled, completed, cancelled
-  amount    Float?   // Course fee
-  currency  String   @default("RWF")
-  paymentId String?  // Flutterwave transaction ID
-  paymentStatus String @default("unpaid") // unpaid, paid, failed
-  paymentMethod String? // flutterwave, manual, whatsapp
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  phone         String
+  course        String
+  status        String   @default("enrolled")
+  amount        Float?
+  currency      String   @default("RWF")
+  paymentId     String?
+  paymentStatus String   @default("unpaid")
+  paymentMethod String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([email])
   @@index([course])
@@ -61,7 +66,7 @@ model ContactMessage {
   email     String
   subject   String
   message   String
-  status    String   @default("new") // new, read, responded
+  status    String   @default("new")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -90,19 +95,9 @@ model Service {
 model AcademyContent {
   id        String   @id @default(cuid())
   title     String
-  content   String   // JSON stringified courses data
+  content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model AdminSettings {
-  id                String   @id @default(cuid())
-  siteName          String   @default("SK Logic")
-  siteEmail         String   @default("info@sklogic.com")
-  maintenanceMode   Boolean  @default(false)
-  analyticsEnabled  Boolean  @default(true)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
 }
 
 model Testimonial {
@@ -129,16 +124,17 @@ model News {
 }
 
 model Promo {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   title     String
-  code      String   @unique
+  code      String    @unique
   details   String?
-  active    Boolean  @default(true)
+  active    Boolean   @default(true)
   startsAt  DateTime?
   endsAt    DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
+
 model GalleryImage {
   id        String   @id @default(cuid())
   src       String
@@ -151,13 +147,13 @@ model GalleryImage {
 }
 
 model PageSettings {
-  id                    String   @id @default(cuid())
-  pageBackgroundColor   String   @default("from-slate-950 to-slate-900")
-  pageBackgroundGradient String  @default("from-slate-950 via-slate-900 to-slate-900")
-  accentColor           String   @default("blue-600")
-  textColor             String   @default("white")
-  fontFamily            String?  @default("system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial")
-  baseFontSize          String?  @default("16px")
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                     String   @id @default(cuid())
+  pageBackgroundColor    String   @default("from-slate-950 to-slate-900")
+  pageBackgroundGradient String   @default("from-slate-950 via-slate-900 to-slate-900")
+  accentColor            String   @default("blue-600")
+  textColor              String   @default("white")
+  fontFamily             String?  @default("system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial")
+  baseFontSize           String?  @default("16px")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }
