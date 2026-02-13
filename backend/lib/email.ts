@@ -80,7 +80,7 @@ export async function sendBookingConfirmationEmail({
 }
 
 export async function sendContactReplyEmail({
-  adminEmail,
+  // adminEmail removed (unused)
   customerName,
   customerEmail,
   subject,
@@ -89,17 +89,11 @@ export async function sendContactReplyEmail({
   try {
     const resend = getResendClient()
     const adminResponse = await resend.emails.send({
-      from: 'SK Logic <noreply@sk-logic.com>',
-      to: adminEmail,
-      subject: `New Contact Message: ${subject}`,
-      html: `
-        <h2>New Contact Message</h2>
-        <p><strong>From:</strong> ${customerName} (${customerEmail})</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-        <p><em>Timestamp: ${new Date().toLocaleString()}</em></p>
-      `,
+      from: 'SK Logic <onboarding@resend.dev>', // Use Resend default sender
+      to: 'kamarasolomon164@gmail.com', // Verified signup email
+      reply_to: customerEmail,
+      subject: `Contact Form: ${subject}`,
+      text: `Name: ${customerName}\nEmail: ${customerEmail}\n\nMessage: ${message}`,
     })
 
     const customerResponse = await resend.emails.send({

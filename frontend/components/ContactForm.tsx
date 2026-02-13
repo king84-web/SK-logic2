@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import axios from 'axios'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -25,16 +24,29 @@ export default function ContactForm() {
     setStatus('idle')
 
     try {
-      await axios.post('/api/contact', formData)
-      setStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      setTimeout(() => setStatus('idle'), 3000)
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // WhatsApp redirect logic
+        const message = `Hello SK Logic! My name is ${formData.name}. I am contacting you regarding: ${formData.subject}.`;
+        const whatsappUrl = `https://wa.me/250792405593?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        alert("Message sent! Opening WhatsApp...");
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
     } catch (error) {
-      console.error('Error sending message:', error)
-      setStatus('error')
-      setTimeout(() => setStatus('idle'), 3000)
+      console.error("Submission error:", error);
+      setStatus('error');
     } finally {
-      setLoading(false)
+      setLoading(false);
+      setTimeout(() => setStatus('idle'), 3000);
     }
   }
 

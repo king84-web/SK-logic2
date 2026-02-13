@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Send confirmation emails
-    const adminEmail = process.env.ADMIN_EMAIL || 'kamarasolomon164@gmail.com'
+    const adminEmail = 'kamarasolomon164@gmail.com' // Force it here to be sure
     const emailResult = await sendContactReplyEmail({
       adminEmail,
       customerName: body.name,
