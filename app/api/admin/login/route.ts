@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import bcrypt from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
 
 export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
 
+    // Check against your specific admin credentials
     if (email === "kamarasolomon164@gmail.com" && password === "Trapper84") {
       return NextResponse.json({ success: true });
     }
@@ -22,4 +20,3 @@ export async function POST(request: Request) {
     );
   }
 }
-// This route is now obsolete. Admin authentication is handled by NextAuth.
