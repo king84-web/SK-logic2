@@ -14,11 +14,10 @@ import { motion } from 'framer-motion'
 type Tab = 'overview' | 'bookings' | 'content' | 'gallery' | 'settings'
 
 export default function AdminDashboard() {
-  const router = useRouter()
+  const router = useRouter();
   const { isAuthenticated, isLoading, logout } = useAdmin();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [isReady, setIsReady] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
