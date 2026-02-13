@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { Check, X, Eye, EyeOff } from 'lucide-react'
+import { Check, X, Eye, EyeOff, CheckCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 interface Booking {
@@ -83,6 +83,27 @@ export default function BookingManagement() {
     })
   }
 
+  const handleApproveBooking = async (bookingId: string) => {
+    try {
+      const response = await fetch(`/api/bookings/${bookingId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'approved' }),
+      })
+
+      if (response.ok) {
+        router.refresh()
+        await fetchBookings()
+      } else {
+        console.error('Error approving booking')
+        alert('Failed to approve booking')
+      }
+    } catch (error) {
+      console.error('Error approving booking:', error)
+      alert('Failed to approve booking')
+    }
+  }
+
   if (loading) {
     return (
       <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8">
@@ -114,7 +135,7 @@ export default function BookingManagement() {
                 <th className="px-6 py-4 text-left font-semibold text-slate-300">Customer</th>
                 <th className="px-6 py-4 text-left font-semibold text-slate-300">Service</th>
                 <th className="px-6 py-4 text-left font-semibold text-slate-300">Payment</th>
-                <th className="px-6 py-4 text-left font-semibold text-slate-300">Status</th>
+                <th className="px-6 py-4 text-left font-semibold text-slate-300">Booking Status</th>
                 <th className="px-6 py-4 text-left font-semibold text-slate-300">Date</th>
                 <th className="px-6 py-4 text-center font-semibold text-slate-300">Action</th>
               </tr>
@@ -143,20 +164,34 @@ export default function BookingManagement() {
                   <td className="px-6 py-4">
                     <PaymentStatusBadge status={booking.paymentStatus} />
                   </td>
+                  <td className="px-6 py-4">
+                    <StatusBadge status={booking.status} />
+                  </td>
                   <td className="px-6 py-4 text-slate-400 text-xs">
                     {new Date(booking.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <button
-                      onClick={() => toggleRowExpansion(booking.id)}
-                      className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 transition"
-                    >
-                      {expandedRows.has(booking.id) ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
+                    <div className="flex items-center justify-center gap-2">
+                      {booking.status !== 'approved' && (
+                        <button
+                          onClick={() => handleApproveBooking(booking.id)}
+                          className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/20 hover:bg-green-500/30 text-green-300 transition"
+                          title="Approve booking"
+                        >
+                          <CheckCircle className="w-4 h-4" />
+                        </button>
                       )}
-                    </button>
+                      <button
+                        onClick={() => toggleRowExpansion(booking.id)}
+                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 transition"
+                      >
+                        {expandedRows.has(booking.id) ? (
+                          <EyeOff className="w-4 h-4" />
+                        ) : (
+                          <Eye className="w-4 h-4" />
+                        )}
+                      </button>
+                    </div>
                   </td>
                 </motion.tr>
               ))}
@@ -235,6 +270,39 @@ function PaymentStatusBadge({ status }: { status: string }) {
   }
 
   const Icon = config[status]?.icon || X
+  return (
+    <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-lg ${config[status]?.bg} ${config[status]?.text}`}>
+      <Icon className="w-4 h-4" />
+      <span className="text-xs font-medium capitalize">{status}</span>
+    </span>
+  )
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const config: Record<string, { bg: string; text: string; icon: any }> = {
+    pending: {
+      bg: 'bg-yellow-500/20',
+      text: 'text-yellow-300',
+      icon: Clock,
+    },
+    approved: {
+      bg: 'bg-green-500/20',
+      text: 'text-green-300',
+      icon: Check,
+    },
+    completed: {
+      bg: 'bg-blue-500/20',
+      text: 'text-blue-300',
+      icon: Check,
+    },
+    cancelled: {
+      bg: 'bg-red-500/20',
+      text: 'text-red-300',
+      icon: X,
+    },
+  }
+
+  const Icon = config[status]?.icon || Clock
   return (
     <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-lg ${config[status]?.bg} ${config[status]?.text}`}>
       <Icon className="w-4 h-4" />

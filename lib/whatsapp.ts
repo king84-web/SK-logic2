@@ -11,8 +11,9 @@ export function generateWhatsAppLink(
   return `https://wa.me/${phoneNumber}?text=${encodedMessage}`
 }
 
-export function generateServiceBookingMessage(serviceName: string): string {
-  return `Hi SK Logic, I am interested in ${serviceName}. Please provide more details and pricing.`
+export function generateServiceBookingMessage(serviceName: string, customerName?: string): string {
+  const namePrefix = customerName ? `My name is ${customerName}. ` : ''
+  return `${namePrefix}Hi SK Logic, I am interested in ${serviceName}. Please provide more details and pricing.`
 }
 
 export function generateAcademyCourseMessage(courseName: string): string {
@@ -28,8 +29,8 @@ export const WHATSAPP_BUSINESS_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER 
 /**
  * Create a complete WhatsApp booking link
  */
-export function createWhatsAppBookingLink(serviceName: string): string {
-  const message = generateServiceBookingMessage(serviceName)
+export function createWhatsAppBookingLink(serviceName: string, customerName?: string): string {
+  const message = generateServiceBookingMessage(serviceName, customerName)
   return generateWhatsAppLink(WHATSAPP_BUSINESS_NUMBER, message)
 }
 

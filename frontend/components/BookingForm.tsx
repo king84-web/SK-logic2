@@ -117,7 +117,7 @@ export default function BookingForm({ selectedService }: BookingFormProps) {
       alert('Please select a service first')
       return
     }
-    const whatsappLink = createWhatsAppBookingLink(service)
+    const whatsappLink = createWhatsAppBookingLink(service, formData.name)
     window.open(whatsappLink, '_blank')
     setStatus('success')
     setFormData({ 
