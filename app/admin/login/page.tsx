@@ -5,32 +5,20 @@ import { useAdmin } from '@/lib/admin-context'
 import { useRouter } from 'next/navigation'
 
 export default function AdminLoginPage() {
-  const router = useRouter()
-  const { login } = useAdmin()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  // const router = useRouter()
+  const { login, isLoading } = useAdmin();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setIsLoading(true)
-
-    try {
-      const success = await login(email, password)
-      if (success) {
-        router.push('/admin/dashboard')
-      } else {
-        setError('Invalid email or password')
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.')
-      console.error('Login error:', err)
-    } finally {
-      setIsLoading(false)
+    e.preventDefault();
+    setError('');
+    const success = await login(email, password);
+    if (!success) {
+      setError('Invalid email or password');
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 to-slate-900">

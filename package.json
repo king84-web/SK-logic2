@@ -4,10 +4,11 @@
   "description": "SK Logic Official Website - Professional service-booking platform for web development, technical device services, and digital education.",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "db:seed": "ts-node prisma/seed.ts"
   },
   "engines": {
     "node": "20.x"

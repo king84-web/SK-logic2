@@ -1,3 +1,4 @@
+
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
@@ -8,8 +9,7 @@ async function main() {
   const plainPassword = 'Trapper84';
   const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-  // Upsert admin settings with email and password
-  await prisma.adminSettings.upsert({
+  await prisma.user.upsert({
     where: { email },
     update: {
       password: hashedPassword,
@@ -17,14 +17,11 @@ async function main() {
     create: {
       email,
       password: hashedPassword,
-      siteName: 'SK Logic',
-      siteEmail: 'info@sklogic.com',
-      maintenanceMode: false,
-      analyticsEnabled: true,
+      name: 'Solomon Kamara',
     },
   });
 
-  console.log('Admin seeded successfully!');
+  console.log('User seeded successfully!');
 }
 
 main()

@@ -15,28 +15,23 @@ type Tab = 'overview' | 'bookings' | 'content' | 'gallery' | 'settings'
 
 export default function AdminDashboard() {
   const router = useRouter()
-  const { isAuthenticated, isLoading, logout } = useAdmin()
-  const [activeTab, setActiveTab] = useState<Tab>('overview')
-  const [isReady, setIsReady] = useState(false)
+  const { isAuthenticated, isLoading, logout } = useAdmin();
+  const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const [isReady, setIsReady] = useState(false);
+  const router = useRouter();
 
-  // Check authentication on mount
   useEffect(() => {
-    // Give the context time to check auth status
-    const timer = setTimeout(() => {
-      if (!isLoading && !isAuthenticated) {
-        router.push('/admin/login')
-      } else if (!isLoading) {
-        setIsReady(true)
-      }
-    }, 100)
-
-    return () => clearTimeout(timer)
-  }, [isLoading, isAuthenticated, router])
+    if (!isLoading && !isAuthenticated) {
+      router.push('/admin/login');
+    } else if (!isLoading) {
+      setIsReady(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, isAuthenticated]);
 
   const handleLogout = () => {
-    logout()
-    router.push('/')
-  }
+    logout();
+  };
 
   // While loading or checking auth
   if (isLoading || !isReady) {

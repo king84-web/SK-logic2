@@ -1,0 +1,12 @@
+services:
+  web:
+    type: web
+    name: sk-logic-api
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+    autoDeploy: true
