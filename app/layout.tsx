@@ -6,6 +6,8 @@ import { AdminProvider } from '@/lib/admin-context'
 import Providers from '@/app/providers'
 import BackgroundWrapper from '@/app/background-wrapper'
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'SK Logic - Think Logically, Build Digital',
   description: 'Professional service-booking platform for web development, technical device services, and digital education.',
