@@ -43,7 +43,6 @@ export async function POST(request: NextRequest) {
         service: body.service,
         message: body.message || null,
         date: body.date ? new Date(body.date) : null,
-        status: 'pending',
       },
     })
 

@@ -27,7 +27,6 @@ model ServiceBooking {
   service       String
   message       String?
   date          DateTime?
-  status        String    @default("pending")
   amount        Float?
   currency      String    @default("RWF")
   paymentId     String?
@@ -38,7 +37,6 @@ model ServiceBooking {
 
   @@index([email])
   @@index([service])
-  @@index([status])
   @@index([paymentStatus])
   @@index([paymentId])
 }
@@ -49,7 +47,6 @@ model AcademyEnrollment {
   email         String
   phone         String
   course        String
-  status        String   @default("enrolled")
   amount        Float?
   currency      String   @default("RWF")
   paymentId     String?
@@ -60,7 +57,6 @@ model AcademyEnrollment {
 
   @@index([email])
   @@index([course])
-  @@index([status])
   @@index([paymentStatus])
 }
 
@@ -70,12 +66,10 @@ model ContactMessage {
   email     String
   subject   String
   message   String
-  status    String   @default("new")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([email])
-  @@index([status])
 }
 
 model HeroContent {
