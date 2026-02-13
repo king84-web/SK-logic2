@@ -42,7 +42,6 @@ export async function POST(request: NextRequest) {
         where: { id: bookingId },
         data: {
           paymentStatus: paymentStatus,
-          status: paymentStatus === 'paid' ? 'confirmed' : booking.status,
           updatedAt: new Date(),
         },
       })
@@ -65,7 +64,6 @@ export async function POST(request: NextRequest) {
         where: { id: enrollmentId },
         data: {
           paymentStatus: paymentStatus,
-          status: paymentStatus === 'paid' ? 'enrolled' : enrollment.status,
           updatedAt: new Date(),
         },
       })

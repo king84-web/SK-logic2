@@ -40,7 +40,6 @@ export async function POST(request: NextRequest) {
         email: body.email,
         phone: body.phone,
         course: body.course,
-        status: 'enrolled',
       },
     })
 
