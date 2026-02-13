@@ -5,7 +5,7 @@ import { useAdmin } from '@/lib/admin-context'
 import { useRouter } from 'next/navigation'
 
 export default function AdminLoginPage() {
-  // const router = useRouter()
+  const router = useRouter() // Line 8: Uncommented and active
   const { login, isLoading } = useAdmin();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +15,10 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setError('');
     const success = await login(email, password);
-    if (!success) {
+    if (success) {
+      // We use the router here so Vercel is happy
+      router.push('/admin/dashboard');
+    } else {
       setError('Invalid email or password');
     }
   };
@@ -72,8 +75,6 @@ export default function AdminLoginPage() {
               {isLoading ? 'Logging in...' : 'Login'}
             </button>
           </form>
-
-
         </div>
       </div>
     </div>
