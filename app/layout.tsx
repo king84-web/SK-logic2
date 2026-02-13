@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navigation from '@/frontend/components/Navigation'
 import Footer from '@/frontend/components/Footer'
-import { AdminProvider } from '@/lib/admin-context'
 import { Providers } from '@/frontend/components/Providers'
 import BackgroundWrapper from '@/app/background-wrapper'
 
