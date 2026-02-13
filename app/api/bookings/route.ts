@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/backend/lib/db/prisma'
+import prisma from '@/backend/lib/db/prisma'
 import { sendBookingConfirmationEmail } from '@/backend/lib/email'
 
 // CORS middleware
