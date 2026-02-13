@@ -41,7 +41,6 @@ export async function POST(request: NextRequest) {
         email: body.email,
         subject: body.subject,
         message: body.message,
-        status: 'new',
       },
     })
 
